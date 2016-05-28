@@ -10,16 +10,23 @@ import time
 import csv
 import datetime
 
+t_start = time.clock()
 
 max_length = 7
 in_dim = 1
 out_dim = 1
-D_batch_size=5000
-D_nb_epoch=10
-D_validation_split=0.3
+D_batch_size = 5000
+D_nb_epoch = 10
+D_validation_split = 0.3
 rate_of_test = 0.3
+predict_date = 61
+mod = 'c'
 
-mod = 'v'
+arr_date = []
+d1 = datetime.datetime(2015, 9, 1)
+for i in range(0, 60):
+    d = d1 + datetime.timedelta(days=i)
+    arr_date.append(d.strftime('%Y%m%d'))
 
 
 def _load_data(data, n_prev=max_length):
@@ -34,6 +41,7 @@ def _load_data(data, n_prev=max_length):
     alsY = np.array(docY)
 
     return alsX, alsY
+
 
 #
 # def get_train_test_data(df):
@@ -76,6 +84,7 @@ def train_test_by_lstm(X_train, y_train, X_test):
     predicted = model.predict(X_test)
     return predicted
 
+
 def train_by_lstm(X_train, y_train):
     hidden_neurons = 300
     max_sequence_length = max_length
@@ -108,40 +117,38 @@ def load_tianchi_data():
 
     playss = pd.DataFrame(all_plays)
     all_plays = playss.T
-    return all_plays,arr_artist
+    return all_plays, arr_artist
 
-def get_score_of_predict(predicted,y_test,data):
+
+def get_score_of_predict(predicted, y_test, data):
     score = 0.0
-    for i in range(0,50):
+    for i in range(0, 50):
         thta = 0.0
         fi = 0.0
-        for k in range(0,len(y_test)):
-            thta = ((predicted[k][i] - y_test[k][i])/y_test[k][i]) ** 2
+        for k in range(0, len(y_test)):
+            thta = ((predicted[k][i] - y_test[k][i]) / y_test[k][i]) ** 2
             fi += y_test[k][i]
-        thta = np.sqrt(thta/len(y_test))
+        thta = np.sqrt(thta / len(y_test))
         fi = np.sqrt(fi)
-        score += (1-thta) * fi
+        score += (1 - thta) * fi
     return score
 
-def get_score_of_one_predict(predicted,y_test):
+
+def get_score_of_one_predict(predicted, y_test):
     score = 0.0
     thta = 0.0
     fi = 0.0
 
-    for k in range(0,len(y_test)):
-        thta = ((predicted[k][0] - y_test[k][0])/y_test[k][0]) ** 2
+    for k in range(0, len(y_test)):
+        thta = ((predicted[k][0] - y_test[k][0]) / y_test[k][0]) ** 2
         fi += y_test[k][0]
-    thta = np.sqrt(thta/len(y_test))
+    thta = np.sqrt(thta / len(y_test))
     fi = np.sqrt(fi)
-    score += (1-thta) * fi
+    score += (1 - thta) * fi
     return score
 
-data,arr_artist = load_tianchi_data()
-arr_date = []
-d1 = datetime.datetime(2015, 9, 1)
-for i in range(0, 60):
-    d = d1 + datetime.timedelta(days=i)
-    arr_date.append(d.strftime('%Y%m%d'))
+
+data, arr_artist = load_tianchi_data()
 
 t_data = tianchi_data()
 if mod == 'v':
@@ -157,45 +164,51 @@ if mod == 'v':
         for pi in p:
             plays.append(pi[0])
         plays = pd.DataFrame(plays)
-        (X_train, y_train), (X_test, y_test) = train_test_split(plays,rate_of_test)  # retrieve data
-        predicted = train_test_by_lstm(X_train, y_train,X_test)
-        a_score = get_score_of_one_predict(predicted,y_test)
+        (X_train, y_train), (X_test, y_test) = train_test_split(plays, rate_of_test)  # retrieve data
+        predicted = train_test_by_lstm(X_train, y_train, X_test)
+        a_score = get_score_of_one_predict(predicted, y_test)
 
-        print 'this term, score=',a_score
+        print 'this term, score=', a_score
         score += a_score
     print 'score=', score
 
 
-
-    # for self-valid
-    (X_train, y_train), (X_test, y_test) = train_test_split(data,rate_of_test)
-    predicted = train_test_by_lstm(X_train, y_train,X_test)
-
-    score = get_score_of_predict(predicted,y_test,data)
-    print score
-    rmse = np.sqrt(((predicted - y_test) ** 2).mean(axis=0))
-    print rmse
 elif mod == 'c':
     # for contest
-    (X_train, y_train), (X_test, y_test) = train_test_split(data,0)
-    model = train_by_lstm(X_train, y_train)
-    td = data.iloc[len(data)-max_length:].as_matrix()
-    all_predict = []
-    predict_data = []
-    for k in range(0,60):
-        arr = []
-        arr.append(td)
-        predicted = model.predict(np.array(arr))[0]
-        td = pd.DataFrame(td)
-        all_predict.append(predicted)
-        td = td.iloc[1:]
-        td.ix[max_length+k] = pd.Series(predicted)
-        td = td.iloc[0:].as_matrix()
-        for idx in range(len(predicted)):
-            predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k]))
-    csvfile = file("csv_lstm526.csv", 'wb')
-    writer = csv.writer(csvfile)
+    sql = 'SELECT distinct(artist_id) FROM music_tianchi.plays;'
+    arr_artist = t_data.query(sql)
+    for artist_item in arr_artist:
+        print 'handling ', artist_item[0]
+        sql = "SELECT plays FROM music_tianchi.plays WHERE artist_id='" + artist_item[0] + "' Order by Ds;"
+        p = t_data.query(sql)
+        plays = []
+        for pi in p:
+            plays.append(pi[0])
+        plays = pd.DataFrame(plays)
+        (X_train, y_train), (X_test, y_test) = train_test_split(plays, 0)  # retrieve data
+        model = train_by_lstm(X_train, y_train)
+        td = data.iloc[len(data) - max_length:].as_matrix()
+        print td
+        time.sleep(1000)
+        predict_data = []
+        for k in range(0, predict_date):
+            arr = []
+            arr.append(td)
+            predicted = model.predict(np.array(arr))[0]
+            td = pd.DataFrame(td)
+            td = td.iloc[1:]
+            td.ix[max_length + k] = pd.Series(predicted)
+            td = td.iloc[0:].as_matrix()
+            if predict_date == 60:
+                for idx in range(len(predicted)):
+                    predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k]))
+            if predict_date == 61 and k > 0:
+                for idx in range(len(predicted)):
+                    predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k - 1]))
+        csvfile = file("csv_lstmd1.csv", 'wb')
+        writer = csv.writer(csvfile)
+        writer.writerows(predict_data)
+        csvfile.close()
 
-    writer.writerows(predict_data)
-
-    csvfile.close()
+t_end = time.clock()
+print 'elapsed time=', t_end - t_start
