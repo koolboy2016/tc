@@ -188,7 +188,7 @@ elif mod == 'c':
         plays = pd.DataFrame(plays)
         (X_train, y_train), (X_test, y_test) = train_test_split(plays, 0)  # retrieve data
         model = train_by_lstm(X_train, y_train)
-        td = data.iloc[len(data) - max_length:, j:j].as_matrix()
+        td = data.iloc[len(data) - max_length:, j].T.as_matrix()
 
         print td
         sys.exit()
