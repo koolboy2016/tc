@@ -16,7 +16,7 @@ max_length = 7
 in_dim = 1
 out_dim = 1
 D_batch_size = 5000
-D_nb_epoch = 10
+D_nb_epoch = 4000
 D_validation_split = 0.3
 rate_of_test = 0.3
 predict_date = 61
@@ -187,8 +187,9 @@ elif mod == 'c':
     sql = 'SELECT distinct(artist_id) FROM music_tianchi.plays;'
     arr_artist = t_data.query(sql)
     for j in range(0, len(arr_artist)):
+        t1 = time.clock()
         artist_item = arr_artist[j]
-        print 'handling ', artist_item[0]
+        print 'handling ',j,' ', artist_item[0]
         sql = "SELECT plays FROM music_tianchi.plays WHERE artist_id='" + artist_item[0] + "' Order by Ds;"
         p = t_data.query(sql)
         plays = []
@@ -214,10 +215,12 @@ elif mod == 'c':
             if predict_date == 61 and k > 0:
                 for idx in range(len(predicted)):
                     predict_data.append((artist_item[0], int(round(predicted[0])), arr_date[k - 1]))
-        csvfile = file("csv_lstmd1.csv", 'wb')
-        writer = csv.writer(csvfile)
-        writer.writerows(predict_data)
-        csvfile.close()
+        t2 = time.clock()
+        print 'sub elapsed time=', t2 - t1
+    csvfile = file("csv_lstmd1.csv", 'wb')
+    writer = csv.writer(csvfile)
+    writer.writerows(predict_data)
+    csvfile.close()
 
 t_end = time.clock()
 print 'elapsed time=', t_end - t_start
