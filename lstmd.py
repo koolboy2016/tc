@@ -8,7 +8,7 @@ from keras.layers.recurrent import LSTM
 from data_sql import *
 import time
 import csv
-import datetime,sys
+import datetime, sys
 
 t_start = time.clock()
 
@@ -177,7 +177,7 @@ elif mod == 'c':
     # for contest
     sql = 'SELECT distinct(artist_id) FROM music_tianchi.plays;'
     arr_artist = t_data.query(sql)
-    for j in range(0,len(arr_artist)):
+    for j in range(0, len(arr_artist)):
         artist_item = arr_artist[j]
         print 'handling ', artist_item[0]
         sql = "SELECT plays FROM music_tianchi.plays WHERE artist_id='" + artist_item[0] + "' Order by Ds;"
@@ -188,7 +188,7 @@ elif mod == 'c':
         plays = pd.DataFrame(plays)
         (X_train, y_train), (X_test, y_test) = train_test_split(plays, 0)  # retrieve data
         model = train_by_lstm(X_train, y_train)
-        td = data.iloc[len(data) - max_length:].as_matrix()
+        td = data.iloc[len(data) - max_length:, j].as_matrix()
         print td
         sys.exit()
         predict_data = []
