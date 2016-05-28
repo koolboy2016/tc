@@ -210,11 +210,10 @@ elif mod == 'c':
             td = td.iloc[0:].as_matrix()
             if predict_date == 60:
                 for idx in range(len(predicted)):
-                    predict_data.append((artist_item[0], int(round(predicted[idx])), arr_date[k]))
+                    predict_data.append((artist_item[0], int(round(predicted[0])), arr_date[k]))
             if predict_date == 61 and k > 0:
                 for idx in range(len(predicted)):
-                    predict_data.append((artist_item[0], int(round(predicted[idx])), arr_date[k - 1]))
-            print predicted
+                    predict_data.append((artist_item[0], int(round(predicted[0])), arr_date[k - 1]))
         csvfile = file("csv_lstmd1.csv", 'wb')
         writer = csv.writer(csvfile)
         writer.writerows(predict_data)
