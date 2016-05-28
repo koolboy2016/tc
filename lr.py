@@ -6,7 +6,7 @@ import csv
 import datetime
 
 t_data = tianchi_data()
-
+# test for git
 # query for all artists
 sql = 'SELECT distinct(artist_id) FROM music_tianchi.mars_tianchi_songs;'
 arr_artist = t_data.query(sql)
