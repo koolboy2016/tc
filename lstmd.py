@@ -207,8 +207,7 @@ elif mod == 'c':
             td = pd.DataFrame(td)
             td = td.iloc[1:]
             td.ix[max_length + k] = pd.Series(predicted)
-            td = td.iloc[0:,j].as_matrix()
-            td = norm_for_td(td)
+            td = td.iloc[0:].as_matrix()
             if predict_date == 60:
                 for idx in range(len(predicted)):
                     predict_data.append((artist_item[0], int(round(predicted[idx])), arr_date[k]))
