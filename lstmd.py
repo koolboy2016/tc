@@ -134,6 +134,15 @@ def get_score_of_predict(predicted, y_test, data):
     return score
 
 
+def norm_for_td(td):
+    ret = []
+    for i in range(0, len(td)):
+        item = []
+        item.append(td[i])
+        ret.append(item)
+    return ret
+
+
 def get_score_of_one_predict(predicted, y_test):
     score = 0.0
     thta = 0.0
@@ -188,10 +197,9 @@ elif mod == 'c':
         plays = pd.DataFrame(plays)
         (X_train, y_train), (X_test, y_test) = train_test_split(plays, 0)  # retrieve data
         model = train_by_lstm(X_train, y_train)
-        td = data.iloc[len(data) - max_length:, j].T.as_matrix()
-
+        td = data.iloc[len(data) - max_length:, j].as_matrix()
+        td = norm_for_td(td)
         print td
-        sys.exit()
         predict_data = []
         for k in range(0, predict_date):
             arr = []
@@ -200,7 +208,8 @@ elif mod == 'c':
             td = pd.DataFrame(td)
             td = td.iloc[1:]
             td.ix[max_length + k] = pd.Series(predicted)
-            td = td.iloc[0:].as_matrix()
+            td = td.iloc[0:,j].as_matrix()
+            td = norm_for_td(td)
             if predict_date == 60:
                 for idx in range(len(predicted)):
                     predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k]))
