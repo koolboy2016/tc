@@ -127,11 +127,9 @@ def get_score_of_one_predict(predicted,y_test):
     score = 0.0
     thta = 0.0
     fi = 0.0
-    print 'predicted',predicted
-    print 'y_test',y_test
-    print len(predicted),' ',len(y_test)
+
     for k in range(0,len(y_test)):
-        thta = ((predicted[k][0] - y_test[k][i])/y_test[k][0]) ** 2
+        thta = ((predicted[k][0] - y_test[k][0])/y_test[k][0]) ** 2
         fi += y_test[k][0]
     thta = np.sqrt(thta/len(y_test))
     fi = np.sqrt(fi)
