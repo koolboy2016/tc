@@ -129,6 +129,7 @@ def get_score_of_one_predict(predicted,y_test):
     fi = 0.0
     print 'predicted',predicted
     print 'y_test',y_test
+    print len(predicted),' ',len(y_test)
     for k in range(0,len(y_test)):
         thta = ((predicted[k][0] - y_test[k][i])/y_test[k][0]) ** 2
         fi += y_test[k][0]
@@ -161,7 +162,7 @@ if mod == 'v':
         (X_train, y_train), (X_test, y_test) = train_test_split(plays,rate_of_test)  # retrieve data
         predicted = train_test_by_lstm(X_train, y_train,X_test)
         a_score = get_score_of_one_predict(predicted,y_test)
-        print len(predicted),' ',len(y_test)
+
         print 'this term, score=',a_score
         score += a_score
     print 'score=', score
