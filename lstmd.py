@@ -65,10 +65,10 @@ def train_test_by_lstm(X_train, y_train, X_test):
 
     model = Sequential()
     model.add(LSTM(500, return_sequences=True, input_shape=(max_sequence_length, in_dim)))
-    model.add(LSTM(500, return_sequences=True))
-    model.add(LSTM(500, return_sequences=True))
-    model.add(LSTM(500, return_sequences=True))
-    model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
     model.add(LSTM(500, return_sequences=False))
     model.add(Dense(out_dim, activation='linear'))
     model.compile(loss="mean_squared_error", optimizer="rmsprop")
@@ -82,10 +82,10 @@ def train_by_lstm(X_train, y_train):
 
     model = Sequential()
     model.add(LSTM(500, return_sequences=True, input_shape=(max_sequence_length, in_dim)))
-    model.add(LSTM(500, return_sequences=True))
-    model.add(LSTM(500, return_sequences=True))
-    model.add(LSTM(500, return_sequences=True))
-    model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
+    # model.add(LSTM(500, return_sequences=True))
     model.add(LSTM(500, return_sequences=False))
     model.add(Dense(out_dim, activation='linear'))
     model.compile(loss="mean_squared_error", optimizer="rmsprop")
@@ -151,7 +151,7 @@ if mod == 'v':
     arr_artist = t_data.query(sql)
     score = 0.0
     for artist_item in arr_artist:
-        print 'handling ',artist_item[0]
+        print 'handling ', artist_item[0]
         sql = "SELECT plays FROM music_tianchi.plays WHERE artist_id='" + artist_item[0] + "' Order by Ds;"
         p = t_data.query(sql)
         plays = []
@@ -161,9 +161,10 @@ if mod == 'v':
         (X_train, y_train), (X_test, y_test) = train_test_split(plays,rate_of_test)  # retrieve data
         predicted = train_test_by_lstm(X_train, y_train,X_test)
         a_score = get_score_of_one_predict(predicted,y_test)
+        print len(predicted),' ',len(y_test)
         print 'this term, score=',a_score
         score += a_score
-    print 'score=',score
+    print 'score=', score
 
 
 
