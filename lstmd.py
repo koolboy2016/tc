@@ -15,15 +15,15 @@ t_start = time.clock()
 start_aidx = -1
 length_aidx = 65535
 if sys.argv[1]:
-    start_aidx = sys.argv[1]
+    start_aidx = int(sys.argv[1])
     if sys.argv[2]:
-        length_aidx = sys.argv[2]
+        length_aidx = (sys.argv[2])
 
 max_length = 7
 in_dim = 1
 out_dim = 1
 D_batch_size = 5000
-D_nb_epoch = 4000
+D_nb_epoch = 4
 D_validation_split = 0.3
 rate_of_test = 0.3
 predict_date = 61
