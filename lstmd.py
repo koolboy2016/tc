@@ -194,7 +194,7 @@ elif mod == 'c':
     predict_data = []
     sql = 'SELECT distinct(artist_id) FROM music_tianchi.plays;'
     arr_artist = t_data.query(sql)
-    print 'progress will start from ',max(0,start_aidx),' to ',min(start_aidx+length_aidx,len(arr_artist))
+    print 'progress will start from ',str(max(0,start_aidx)),' to ',str(min(start_aidx+length_aidx,len(arr_artist)))
     for j in range(max(0,start_aidx), min(start_aidx+length_aidx,len(arr_artist))):
         t1 = time.clock()
         artist_item = arr_artist[j]
