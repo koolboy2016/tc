@@ -225,7 +225,7 @@ elif mod == 'c':
                     predict_data.append((artist_item[0], int(round(predicted[0])), arr_date[k - 1]))
         t2 = time.clock()
         print 'sub elapsed time=', t2 - t1
-    csvfile = file("csv_lstmd1.csv", 'wb')
+    csvfile = file("csv_lstmd"+str(start_aidx)+"_"+str(length_aidx)+".csv", 'wb')
     writer = csv.writer(csvfile)
     writer.writerows(predict_data)
     csvfile.close()
