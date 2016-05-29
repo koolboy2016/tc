@@ -17,7 +17,7 @@ length_aidx = 65535
 if sys.argv[1]:
     start_aidx = int(sys.argv[1])
     if sys.argv[2]:
-        length_aidx = (sys.argv[2])
+        length_aidx = int((sys.argv[2]))
 
 max_length = 7
 in_dim = 1
