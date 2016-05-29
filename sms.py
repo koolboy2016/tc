@@ -26,4 +26,3 @@ def send_sms(text):
     conn.close()
     return response_str
 
-send_sms("python test")

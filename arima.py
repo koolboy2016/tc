@@ -12,7 +12,7 @@ from data_sql import *
 from statsmodels.graphics.api import qqplot
 import time
 
-def train_by_arma(dta, predict_date):
+def train_by_arma(dta):
     # dta= dta.diff(2)
     # fig = plt.figure(figsize=(12,8))
     # ax1=fig.add_subplot(211)
@@ -55,5 +55,5 @@ for artist_item in arr_artist:
     for i in range(0, 60):
         d = d1 + datetime.timedelta(days=i)
         dates_test.append(d)
-    predict = train_by_arma(dta,dates_test)
+    predict = train_by_arma(dta)
     print predict
