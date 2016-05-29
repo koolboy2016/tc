@@ -31,6 +31,7 @@ D_validation_split = 0.3
 rate_of_test = 0.3
 predict_date = 61
 mod = 'c'
+write_to_file = ''
 
 arr_date = []
 d1 = datetime.datetime(2015, 9, 1)
@@ -229,10 +230,12 @@ elif mod == 'c':
                     predict_data.append((artist_item[0], int(round(predicted[0])), arr_date[k - 1]))
         t2 = time.clock()
         print 'sub elapsed time=', t2 - t1
-    csvfile = file("csv_lstmd"+str(start_aidx)+"_"+str(length_aidx)+".csv", 'wb')
+    write_to_file = "csv_lstmd"+str(start_aidx)+"_"+str(length_aidx)+".csv"
+    csvfile = file(write_to_file, 'wb')
     writer = csv.writer(csvfile)
     writer.writerows(predict_data)
     csvfile.close()
 t_end = time.clock()
 print 'elapsed time=', t_end - t_start
-send_sms("lstmd.py已经完成,,执行时间为"+str(t_end - t_start))
+if mod == 'c':
+    send_sms("lstmd.py已经完成,,执行时间为"+str(t_end - t_start)+",写入了文件"+write_to_file)
