@@ -16,7 +16,7 @@ apikey = "7df4b84ffd47f5d5919ce3cc8f892d88"
 mobile = "18868831809"
 
 def send_sms(text):
-    text = "【KUE】提醒:"+text;
+    text = "【KUE】提醒:"+text
     params = urllib.urlencode({'apikey': apikey, 'text': text, 'mobile': mobile})
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
     conn = httplib.HTTPSConnection(sms_host, port=port, timeout=30)
