@@ -12,6 +12,13 @@ import datetime, sys
 
 t_start = time.clock()
 
+start_aidx = -1
+length_aidx = 65535
+if sys.argv[1]:
+    start_aidx = sys.argv[1]
+    if sys.argv[2]:
+        length_aidx = sys.argv[2]
+
 max_length = 7
 in_dim = 1
 out_dim = 1
@@ -184,9 +191,10 @@ if mod == 'v':
 
 elif mod == 'c':
     # for contest
+    predict_data = []
     sql = 'SELECT distinct(artist_id) FROM music_tianchi.plays;'
     arr_artist = t_data.query(sql)
-    for j in range(0, len(arr_artist)):
+    for j in range(max(0,start_aidx), min(length_aidx,len(arr_artist))):
         t1 = time.clock()
         artist_item = arr_artist[j]
         print 'handling ',j,' ', artist_item[0]
@@ -200,7 +208,7 @@ elif mod == 'c':
         model = train_by_lstm(X_train, y_train)
         td = data.iloc[len(data) - max_length:, j].as_matrix()
         td = norm_for_td(td)
-        predict_data = []
+
         for k in range(0, predict_date):
             arr = []
             arr.append(td)
