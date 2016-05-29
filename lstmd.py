@@ -230,6 +230,7 @@ elif mod == 'c':
                     predict_data.append((artist_item[0], int(round(predicted[0])), arr_date[k - 1]))
         t2 = time.clock()
         print 'sub elapsed time=', t2 - t1
+        time.sleep(200)
     write_to_file = "csv_lstmd"+str(start_aidx)+"_"+str(length_aidx)+".csv"
     csvfile = file(write_to_file, 'wb')
     writer = csv.writer(csvfile)
