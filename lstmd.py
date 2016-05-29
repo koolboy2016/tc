@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pandas as pd
 from random import random
 import numpy as np
@@ -6,6 +8,7 @@ from keras.layers.core import Dense, Activation, Dropout
 from keras.layers.recurrent import LSTM
 
 from data_sql import *
+from sms import *
 import time
 import csv
 import datetime, sys
@@ -230,6 +233,6 @@ elif mod == 'c':
     writer = csv.writer(csvfile)
     writer.writerows(predict_data)
     csvfile.close()
-
 t_end = time.clock()
 print 'elapsed time=', t_end - t_start
+send_sms("lstmd.py已经完成,,执行时间为"+str(t_end - t_start))
