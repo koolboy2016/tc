@@ -37,8 +37,7 @@ if __name__ == '__main__':
     for artist_item in arr_artist:
         artist_id = artist_item[0]
         sql = "SELECT play_time,down_time,favor_time,gender,day_of_begin,day_of_week,weekend FROM music_tianchi.plays WHERE artist_id = '" + artist_id + "' ;"
-        arr_data = pd.DataFrame(tianchi.query(sql))
-
+        arr_data = pd.DataFrame(np.array(tianchi.query(sql)))
         train_feat = []
         train_id = []
         predict_feat = []
