@@ -3,10 +3,36 @@
 from data_sql import *
 import numpy as np
 import pandas as pd
+from sklearn.ensemble import GradientBoostingRegressor
+import csv
+import datetime,time
 
 n_steps = 10
 total_days = 183
 predict_days = 61
+
+
+def train_by_gbdt(train_feat, train_id):
+    gbdt = GradientBoostingRegressor(
+        loss='ls'
+        , learning_rate=0.1
+        , n_estimators=100
+        , subsample=1
+        , min_samples_split=2
+        , min_samples_leaf=1
+        , max_depth=3
+        , init=None
+        , random_state=None
+        , max_features=None
+        , alpha=0.9
+        , verbose=0
+        , max_leaf_nodes=None
+        , warm_start=False
+    )
+
+    gbdt.fit(train_feat, train_id)
+    # pred = gbdt.predict(test_feat)
+    return gbdt
 
 
 def get_mean_std_diff(arr_pt, arr_dt, arr_ft):
@@ -29,8 +55,18 @@ def get_mean_std_diff(arr_pt, arr_dt, arr_ft):
             avg_favor_diff, std_plays_diff, std_down_diff, std_favor_diff]
 
 
+def get_predict_date():
+    arr_date = []
+    d1 = datetime.datetime(2015, 9, 1)
+    for i in range(0, 60):
+        d = d1 + datetime.timedelta(days=i)
+        arr_date.append(d.strftime('%Y%m%d'))
+    return arr_date
+
+
 if __name__ == '__main__':
     tianchi = tianchi_data()
+    predict_date = get_predict_date()
     sql = 'SELECT distinct(artist_id) FROM music_tianchi.mars_tianchi_songs;'
     arr_artist = tianchi.query(sql)
     predict_data = []
@@ -41,16 +77,28 @@ if __name__ == '__main__':
         train_feat = []
         train_id = []
         predict_feat = []
-        for sp in range(0, total_days - n_steps-1):
-            print 'sp=',sp
+        predict_id = []
+        for sp in range(0, total_days - n_steps - 1):
+            print 'sp=', sp
             arr_pt = np.array(arr_data.iloc[sp:(sp + n_steps), 0].as_matrix())
             arr_dt = np.array(arr_data.iloc[sp:(sp + n_steps), 1].as_matrix())
             arr_ft = np.array(arr_data.iloc[sp:(sp + n_steps), 2].as_matrix())
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_data.iloc[(sp + n_steps)].as_matrix())
+            feat = np.concatenate((feat_for_time, feat_for_normal))
 
-            feat = np.concatenate((feat_for_time,feat_for_normal))
-            tid = np.array(arr_data.iloc[sp + n_steps + 1, 0:3].as_matrix())
-            train_feat.append(feat)
-            train_id.append(tid)
-            print feat,' ',tid
+            if sp != total_days - n_steps - 2:
+                tid = np.array(arr_data.iloc[sp + n_steps + 1, 0:3].as_matrix())
+                train_feat.append(feat)
+                train_id.append(tid)
+                # print feat, ' ', tid
+            else:
+                predict_feat.append(feat)
+        model = train_by_gbdt(train_feat, train_id)
+        for spt in range(0, predict_days):
+            pred = model.predict(predict_feat)
+            predict_id.append(pred)
+            print pred
+            time.sleep(1000)
+
+
