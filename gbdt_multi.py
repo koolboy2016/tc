@@ -103,6 +103,8 @@ if __name__ == '__main__':
         model_down = train_by_gbdt(train_feat, train_idd)
         model_favor = train_by_gbdt(train_feat, train_idf)
 
+        print 'predict_feat',predict_feat
+
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
             pred_d = model_down.predict(predict_feat[spt])
