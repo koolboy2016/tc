@@ -114,7 +114,7 @@ if __name__ == '__main__':
             print pred_p,pred_d,pred_f
 
             wkd = 0
-            dow = int(predict_feat[len(predict_feat)-2])%7
+            dow = int(predict_feat[0][len(predict_feat[0])-2])%7
             if dow in [5,6]:
                 wkd = 1
             next_row = np.array([pred_p,pred_d,pred_f,predict_feat[-4], predict_feat[-3]+1, dow, wkd])
