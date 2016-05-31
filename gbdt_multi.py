@@ -89,9 +89,9 @@ if __name__ == '__main__':
             feat = np.concatenate((feat_for_time, feat_for_normal))
 
             if sp != total_days - n_steps - 2:
-                tid = np.array(arr_data.iloc[sp + n_steps + 1, 0:3].as_matrix())
+                tid = (arr_data.iloc[sp + n_steps + 1, 0:3].as_matrix())
                 train_feat.append(feat)
-                train_id.append(tid.sum())
+                train_id.append(tid)
                 # print feat, ' ', tid
             else:
                 predict_feat.append(feat)
@@ -102,7 +102,7 @@ if __name__ == '__main__':
             predict_id.append(pred)
             print pred
             wkd = 0
-            dow = int(predict_feat[-2])%7
+            dow = int(predict_feat[len(predict_feat)-2])%7
             if dow in [5,6]:
                 wkd = 1
             next_row = np.array([pred[0],pred[1],pred[2],predict_feat[-4], predict_feat[-3]+1, dow, wkd])
