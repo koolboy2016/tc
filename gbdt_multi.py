@@ -50,7 +50,7 @@ if __name__ == '__main__':
             feat_for_normal = np.array(arr_data.iloc[(sp + n_steps)].as_matrix())
 
             feat = np.concatenate((feat_for_time,feat_for_normal))
-            tid = arr_data.ix[(sp + n_steps +1, 0)]
+            tid = arr_data.ix[sp + n_steps + 1, 0:3]
             train_feat.append(feat)
             train_id.append(tid)
             print feat,' ',tid
