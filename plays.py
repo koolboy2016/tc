@@ -50,8 +50,16 @@ for artist_item in arr_artist:
     sql = "SELECT distinct Gender FROM music_tianchi.mars_tianchi_songs WHERE artist_id='"+ artist_id +"' LIMIT 0,1 ;"
     g_ret = t_data.query(sql)
     gender = g_ret[0][0]
+    date_of_week = 6
+    is_weekend = 1
     for i in range(0, 183):
-        predict_data.append((artist_id, int(round(arr_play_time[i])), int(round(arr_down_time[i])), int(round(arr_favor_time[i])),gender, arr_pri_date[i],i))
+        date_of_week %= 7
+        if date_of_week in (5, 6):
+            is_weekend = 1
+        else:
+            is_weekend = 0
+        predict_data.append((artist_id, int(round(arr_play_time[i])), int(round(arr_down_time[i])), int(round(arr_favor_time[i])),gender, arr_pri_date[i],i,date_of_week,is_weekend))
+        date_of_week += 1
 
 csvfile = file("csv_paly.csv", 'wb')
 writer = csv.writer(csvfile)
