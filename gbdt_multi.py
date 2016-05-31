@@ -115,7 +115,7 @@ if __name__ == '__main__':
             dow = int(predict_feat[spt][len(predict_feat[spt])-2])%7
             if dow in [5,6]:
                 wkd = 1
-            next_row = np.array([pred_p,pred_d,pred_f,predict_feat[spt][len(predict_feat[spt])-4], predict_feat[spt][predict_feat[spt]-3]+1, dow, wkd])
+            next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][len(predict_feat[spt])-4], predict_feat[spt][predict_feat[spt]-3]+1, dow, wkd])
             res = arr_data.append(next_row, ignore_index=True)
 
             arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
