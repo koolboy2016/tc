@@ -19,12 +19,12 @@ def get_mean_std_diff(arr_pt, arr_dt, arr_ft):
     std_favor = arr_ft.std()
 
     avg_plays_diff = np.diff(arr_pt).mean()
-    avg_down_diff = np.diff(arr_pt).mean()
-    avg_favor_diff = np.diff(arr_pt).mean()
+    avg_down_diff = np.diff(arr_dt).mean()
+    avg_favor_diff = np.diff(arr_ft).mean()
 
     std_plays_diff = np.diff(arr_pt).std()
-    std_down_diff = np.diff(arr_pt).std()
-    std_favor_diff = np.diff(arr_pt).std()
+    std_down_diff = np.diff(arr_dt).std()
+    std_favor_diff = np.diff(arr_ft).std()
     return [avg_plays, avg_down, avg_favor, std_plays, std_down, std_favor, avg_plays_diff, avg_down_diff,
             avg_favor_diff, std_plays_diff, std_down_diff, std_favor_diff]
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     predict_data = []
     for artist_item in arr_artist:
         artist_id = artist_item[0]
-        sql = "SELECT play_time,down_time,favor_time,gender,day_of_begin,day_of_week,weekend FROM music_tianchi.plays WHERE artist_id = '" + artist_id + "' ;"
+        sql = "SELECT play_time,down_time,favor_time,gender,day_of_begin,day_of_week,weekend FROM music_tianchi.plays WHERE artist_id = '" + artist_id + "' order by day_of_begin;"
         arr_data = pd.DataFrame(np.array(tianchi.query(sql)))
         train_feat = []
         train_id = []
