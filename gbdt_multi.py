@@ -102,7 +102,6 @@ if __name__ == '__main__':
         model_play = train_by_gbdt(train_feat, train_idp)
         model_down = train_by_gbdt(train_feat, train_idd)
         model_favor = train_by_gbdt(train_feat, train_idf)
-        print 'predict_feat',predict_feat
 
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
@@ -128,7 +127,7 @@ if __name__ == '__main__':
             arr_ft = np.array(arr_data.iloc[-n_steps:, 2].as_matrix())
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_data.iloc[-1].as_matrix())
-            predict_feat = np.concatenate((feat_for_time, feat_for_normal))
+            predict_feat.append( np.concatenate((feat_for_time, feat_for_normal)))
 
         time.sleep(1000)
 
