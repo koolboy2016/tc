@@ -42,13 +42,12 @@ if __name__ == '__main__':
         train_id = []
         predict_feat = []
         for sp in range(0, total_days - n_steps):
+            print 'sp=',sp
             arr_pt = np.array(arr_data.iloc[sp:(sp + n_steps), 0].as_matrix())
             arr_dt = np.array(arr_data.iloc[sp:(sp + n_steps), 1].as_matrix())
             arr_ft = np.array(arr_data.iloc[sp:(sp + n_steps), 2].as_matrix())
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_data.iloc[(sp + n_steps)].as_matrix())
-            print feat_for_time
-            print feat_for_normal
 
             feat = np.concatenate((feat_for_time,feat_for_normal))
             tid = arr_data.ix[(sp + n_steps +1, 0)]
