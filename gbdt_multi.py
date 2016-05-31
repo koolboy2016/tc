@@ -104,9 +104,9 @@ if __name__ == '__main__':
         model_favor = train_by_gbdt(train_feat, train_idf)
 
         for spt in range(0, predict_days):
-            pred_p = model_play.predict(predict_feat)
-            pred_d = model_down.predict(predict_feat)
-            pred_f = model_favor.predict(predict_feat)
+            pred_p = model_play.predict(predict_feat[spt])
+            pred_d = model_down.predict(predict_feat[spt])
+            pred_f = model_favor.predict(predict_feat[spt])
 
             predict_id.append(pred_p)
             print pred_p,pred_d,pred_f
@@ -116,10 +116,11 @@ if __name__ == '__main__':
             dow = int(predict_feat[spt][hhw-2])%7
             if dow in [5,6]:
                 wkd = 1
-            next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+1, dow, wkd])
+            next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+2, dow, wkd])
             print 'next_row',next_row
 
-            res = arr_data.append(next_row, ignore_index=True)
+            arr_data = arr_data.append(pd.Series(next_row), ignore_index=True)
+            print arr_data
 
             arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
             arr_dt = np.array(arr_data.iloc[-n_steps:, 1].as_matrix())
@@ -127,6 +128,7 @@ if __name__ == '__main__':
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_data.iloc[-1].as_matrix())
             predict_feat = np.concatenate((feat_for_time, feat_for_normal))
+
         time.sleep(1000)
 
 
