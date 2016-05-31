@@ -7,32 +7,6 @@ import csv
 import datetime
 
 
-def learn_by_gbdt(train_id, train_feat, test_feat):
-    gbdt = GradientBoostingRegressor(
-        loss='ls'
-        , learning_rate=0.1
-        , n_estimators=100
-        , subsample=1
-        , min_samples_split=2
-        , min_samples_leaf=1
-        , max_depth=3
-        , init=None
-        , random_state=None
-        , max_features=None
-        , alpha=0.9
-        , verbose=0
-        , max_leaf_nodes=None
-        , warm_start=False
-    )
-
-    # train_feat=np.genfromtxt("train_feat.txt",dtype=np.float32)
-    # train_id=np.genfromtxt("train_id.txt",dtype=np.float32)
-    # test_feat=np.genfromtxt("test_feat.txt",dtype=np.float32)
-    # test_id=np.genfromtxt("test_id.txt",dtype=np.float32)
-    gbdt.fit(train_feat, train_id)
-    pred = gbdt.predict(test_feat)
-    return pred
-
 
 t_data = tianchi_data()
 
@@ -57,7 +31,7 @@ for i in range(0, 60):
 v = 0
 for artist_item in arr_artist:
     artist_id = artist_item[0]
-    sql = "SELECT count(*),Ds as play_time " + \
+    sql = "SELECT count(if(action_type=1,true,null)) as play_time,count(if(action_type=2,true,null)) as down_time,count(if(action_type=3,true,null)) as favo_time,Ds " + \
           'FROM music_tianchi.mars_tianchi_user_actions,music_tianchi.mars_tianchi_songs ' + \
           "WHERE mars_tianchi_user_actions.song_id=mars_tianchi_songs.song_id AND artist_id = '" + \
           artist_id + "' group by Ds;"
@@ -65,12 +39,23 @@ for artist_item in arr_artist:
     v += 1
     arr_ret = t_data.query(sql)
     arr_play_time = [0] * 183
+    arr_down_time = [0] * 183
+    arr_favor_time = [0] * 183
     for sub in arr_ret:
-        pos = arr_pri_date.index(str(sub[1]))
+        pos = arr_pri_date.index(str(sub[3]))
         arr_play_time[pos] = sub[0]
 
+        pos = arr_pri_date.index(str(sub[3]))
+        arr_down_time[pos] = sub[1]
+
+        pos = arr_pri_date.index(str(sub[3]))
+        arr_favor_time[pos] = sub[2]
+
+    sql = "SELECT distinct Gender FROM music_tianchi.mars_tianchi_songs WHERE artist_id='"+ artist_id +"' LIMIT 0,1 ;"
+    g_ret = t_data.query(sql)
+    gender = g_ret[0][0]
     for i in range(0, 183):
-        predict_data.append((artist_id, int(round(arr_play_time[i])), arr_pri_date[i]))
+        predict_data.append((artist_id, int(round(arr_play_time[i])), int(round(arr_down_time[i])), int(round(arr_favor_time[i])),gender, arr_pri_date[i]),i)
 
 csvfile = file("csv_paly.csv", 'wb')
 writer = csv.writer(csvfile)
