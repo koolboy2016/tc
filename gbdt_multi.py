@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
             hhw = len(predict_feat[spt])
             wkd = 0
-            dow = int(predict_feat[spt][hhw-2])%7
+            dow = int(predict_feat[spt][hhw-2]+1)%7
             if dow in [5,6]:
                 wkd = 1
             next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+2, dow, wkd])
