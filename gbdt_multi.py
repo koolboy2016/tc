@@ -50,7 +50,7 @@ if __name__ == '__main__':
             print feat_for_time
             print feat_for_normal
 
-            feat = np.vstack((feat_for_time,feat_for_normal))
+            feat = np.concatenate((feat_for_time,feat_for_normal))
             tid = arr_data.ix[(sp + n_steps +1, 0)]
             train_feat.append(feat)
             train_id.append(tid)
