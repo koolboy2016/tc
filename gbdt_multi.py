@@ -91,7 +91,7 @@ if __name__ == '__main__':
             if sp != total_days - n_steps - 2:
                 tid = np.array(arr_data.iloc[sp + n_steps + 1, 0:3].as_matrix())
                 train_feat.append(feat)
-                train_id.append(tid)
+                train_id.append(tid.sum())
                 # print feat, ' ', tid
             else:
                 predict_feat.append(feat)
