@@ -128,7 +128,7 @@ if __name__ == '__main__':
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_data.iloc[-1].as_matrix())
             predict_feat.append( np.concatenate((feat_for_time, feat_for_normal)))
-
+            time.sleep(10)
         time.sleep(1000)
 
 
