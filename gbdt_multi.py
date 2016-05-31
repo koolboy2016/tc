@@ -78,8 +78,8 @@ if __name__ == '__main__':
         train_id = []
         predict_feat = []
         predict_id = []
+        gender = arr_data.ix[0,3]
         for sp in range(0, total_days - n_steps - 1):
-            print 'sp=', sp
             arr_pt = np.array(arr_data.iloc[sp:(sp + n_steps), 0].as_matrix())
             arr_dt = np.array(arr_data.iloc[sp:(sp + n_steps), 1].as_matrix())
             arr_ft = np.array(arr_data.iloc[sp:(sp + n_steps), 2].as_matrix())
@@ -95,10 +95,25 @@ if __name__ == '__main__':
             else:
                 predict_feat.append(feat)
         model = train_by_gbdt(train_feat, train_id)
+
         for spt in range(0, predict_days):
             pred = model.predict(predict_feat)
             predict_id.append(pred)
             print pred
-            time.sleep(1000)
+            wkd = 0
+            dow = int(predict_feat[-2])%7
+            if dow in [5,6]:
+                wkd = 1
+            next_row = np.array([pred[0],pred[1],pred[2],predict_feat[-4], predict_feat[-3]+1, dow, wkd])
+            res = arr_data.append(next_row, ignore_index=True)
+
+            arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
+            arr_dt = np.array(arr_data.iloc[-n_steps:, 1].as_matrix())
+            arr_ft = np.array(arr_data.iloc[-n_steps:, 2].as_matrix())
+            feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
+            feat_for_normal = np.array(arr_data.iloc[(sp + n_steps)].as_matrix())
+            predict_feat = np.concatenate((feat_for_time, feat_for_normal))
+        time.sleep(1000)
+
 
 
