@@ -110,7 +110,6 @@ if __name__ == '__main__':
             pred_d = model_down.predict(predict_feat[spt])
             pred_f = model_favor.predict(predict_feat[spt])
 
-            predict_id.append(pred_p)
             print pred_p,pred_d,pred_f
 
             hhw = len(predict_feat[spt])
@@ -121,7 +120,7 @@ if __name__ == '__main__':
             next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+1, dow, wkd])
             print 'next_row',next_row
 
-            arr_data = arr_data.append(pd.Series(next_row), ignore_index=True)
+            arr_data.append(pd.Series(next_row), ignore_index=True)
             print arr_data
 
             arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
