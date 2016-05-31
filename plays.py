@@ -51,7 +51,7 @@ for artist_item in arr_artist:
     g_ret = t_data.query(sql)
     gender = g_ret[0][0]
     for i in range(0, 183):
-        predict_data.append((artist_id, int(round(arr_play_time[i])), int(round(arr_down_time[i])), int(round(arr_favor_time[i])),gender, arr_pri_date[i]),i)
+        predict_data.append((artist_id, int(round(arr_play_time[i])), int(round(arr_down_time[i])), int(round(arr_favor_time[i])),gender, arr_pri_date[i],i))
 
 csvfile = file("csv_paly.csv", 'wb')
 writer = csv.writer(csvfile)
