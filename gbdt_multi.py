@@ -117,6 +117,8 @@ if __name__ == '__main__':
             if dow in [5,6]:
                 wkd = 1
             next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+1, dow, wkd])
+            print 'next_row',next_row
+
             res = arr_data.append(next_row, ignore_index=True)
 
             arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
