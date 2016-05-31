@@ -41,7 +41,7 @@ if __name__ == '__main__':
         train_feat = []
         train_id = []
         predict_feat = []
-        for sp in range(0, total_days - n_steps):
+        for sp in range(0, total_days - n_steps-1):
             print 'sp=',sp
             arr_pt = np.array(arr_data.iloc[sp:(sp + n_steps), 0].as_matrix())
             arr_dt = np.array(arr_data.iloc[sp:(sp + n_steps), 1].as_matrix())
