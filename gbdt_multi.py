@@ -108,7 +108,7 @@ if __name__ == '__main__':
             pred_p = model_play.predict(predict_feat[spt])
             pred_d = model_down.predict(predict_feat[spt])
             pred_f = model_favor.predict(predict_feat[spt])
-            predict_id.append(pred_p)
+            predict_id.append(pred_p[0])
             hhw = len(predict_feat[spt])
             wkd = 0
             dow = int(predict_feat[spt][hhw-2]+1)%7
@@ -117,6 +117,7 @@ if __name__ == '__main__':
             next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+1, dow, wkd])
 
             arr_data.append(pd.Series(next_row), ignore_index=True)
+            print arr_data
             arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
             arr_dt = np.array(arr_data.iloc[-n_steps:, 1].as_matrix())
             arr_ft = np.array(arr_data.iloc[-n_steps:, 2].as_matrix())
