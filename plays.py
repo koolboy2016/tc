@@ -1,8 +1,4 @@
-import numpy as np
-from sklearn.ensemble import GradientBoostingRegressor
 from data_sql import *
-from scipy import stats
-import numpy as np
 import csv
 import datetime
 
