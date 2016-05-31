@@ -47,6 +47,9 @@ if __name__ == '__main__':
             arr_ft = np.array(arr_data.iloc[sp:(sp + n_steps), 2].as_matrix())
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_data.iloc[(sp + n_steps)].as_matrix())
+            print feat_for_time
+            print feat_for_normal
+
             feat = np.vstack((feat_for_time,feat_for_normal))
             tid = arr_data.ix[(sp + n_steps +1, 0)]
             train_feat.append(feat)
