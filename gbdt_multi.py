@@ -29,8 +29,6 @@ def train_by_gbdt(train_feat, train_id):
         , max_leaf_nodes=None
         , warm_start=False
     )
-    print train_feat
-    print train_id
     gbdt.fit(train_feat, train_id)
     # pred = gbdt.predict(test_feat)
     return gbdt
@@ -114,10 +112,10 @@ if __name__ == '__main__':
             print pred_p,pred_d,pred_f
 
             wkd = 0
-            dow = int(predict_feat[0][len(predict_feat[0])-2])%7
+            dow = int(predict_feat[spt][len(predict_feat[spt])-2])%7
             if dow in [5,6]:
                 wkd = 1
-            next_row = np.array([pred_p,pred_d,pred_f,predict_feat[-4], predict_feat[-3]+1, dow, wkd])
+            next_row = np.array([pred_p,pred_d,pred_f,predict_feat[spt][len(predict_feat[spt])-4], predict_feat[spt][predict_feat[spt]-3]+1, dow, wkd])
             res = arr_data.append(next_row, ignore_index=True)
 
             arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
