@@ -29,7 +29,8 @@ def train_by_gbdt(train_feat, train_id):
         , max_leaf_nodes=None
         , warm_start=False
     )
-
+    print train_feat
+    print train_id
     gbdt.fit(train_feat, train_id)
     # pred = gbdt.predict(test_feat)
     return gbdt
