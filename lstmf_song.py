@@ -162,7 +162,7 @@ if mod == 'v':
     print predicted
 
     score = get_score_of_predict(artt_p, artt_y, data)
-    # print score
+    print score
     rmse = np.sqrt(((predicted - y_test) ** 2).mean(axis=0))
     print rmse
 elif mod == 'c':
