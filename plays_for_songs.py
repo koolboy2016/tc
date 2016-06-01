@@ -38,11 +38,11 @@ for song_item in arr_song:
     arr_down_time = [0] * 183
     arr_favor_time = [0] * 183
     for sub in arr_ret:
-        pos = arr_pri_date.index(str(sub[3]))
+        pos = arr_pri_date.index(str(sub[5]))
         arr_play_time[pos] = sub[0]
-        pos = arr_pri_date.index(str(sub[3]))
+        pos = arr_pri_date.index(str(sub[5]))
         arr_down_time[pos] = sub[1]
-        pos = arr_pri_date.index(str(sub[3]))
+        pos = arr_pri_date.index(str(sub[5]))
         arr_favor_time[pos] = sub[2]
 
     sql = "insert into plays_songs (song_id,play_time,down_time,favor_time) values(%s,%d,%d,%d)"
