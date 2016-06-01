@@ -123,7 +123,6 @@ if __name__ == '__main__':
 
             tmp_arr = np.delete(tmp_arr,0,0)
 
-
             tmp_arr = np.concatenate((tmp_arr,[next_row]))
             arr_tmp = pd.DataFrame(tmp_arr)
 
@@ -135,7 +134,7 @@ if __name__ == '__main__':
             predict_feat.append(np.concatenate((feat_for_time, feat_for_normal)))
 
     file_name = get_result_name("gbdt_multi")
-    csvfile = file("csv_gbdtm61.csv", 'wb')
+    csvfile = file(file_name, 'wb')
     writer = csv.writer(csvfile)
     writer.writerows(predict_data_to_csv)
     csvfile.close()
