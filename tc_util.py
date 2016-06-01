@@ -3,6 +3,7 @@
 import httplib
 import urllib
 import json
+import time
 
 sms_host = "sms.yunpian.com"
 voice_host = "voice.yunpian.com"
@@ -15,8 +16,11 @@ sms_voice_send_uri = "/" + version + "/voice/send.json"
 apikey = "7df4b84ffd47f5d5919ce3cc8f892d88"
 mobile = "18868831809"
 
+save_path = "results/"
+
+
 def send_sms(text):
-    text = "【KUE】提醒:"+text
+    text = "【KUE】提醒:" + text
     params = urllib.urlencode({'apikey': apikey, 'text': text, 'mobile': mobile})
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
     conn = httplib.HTTPSConnection(sms_host, port=port, timeout=30)
@@ -26,3 +30,9 @@ def send_sms(text):
     conn.close()
     return response_str
 
+
+def get_result_name(method):
+    now = time.time()
+    time_str = time.strftime("%Y-%m-%d %H:%M:%S", now)
+    ret = save_path + method + time_str + ".csv"
+    return ret

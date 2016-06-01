@@ -6,6 +6,7 @@ import datetime
 import numpy as np
 import pandas as pd
 from data_sql import *
+from tc_util import *
 from sklearn.ensemble import GradientBoostingRegressor
 
 n_steps = 10
@@ -133,7 +134,7 @@ if __name__ == '__main__':
             feat_for_normal = np.array(arr_tmp.iloc[-1].as_matrix())
             predict_feat.append(np.concatenate((feat_for_time, feat_for_normal)))
 
-
+    file_name = get_result_name("gbdt_multi")
     csvfile = file("csv_gbdtm61.csv", 'wb')
     writer = csv.writer(csvfile)
     writer.writerows(predict_data_to_csv)

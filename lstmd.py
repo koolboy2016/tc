@@ -12,7 +12,7 @@ from keras.layers.recurrent import LSTM
 from keras.models import Sequential
 from data_sql import *
 
-from sms import *
+from tc_util import *
 
 t_start = time.clock()
 
