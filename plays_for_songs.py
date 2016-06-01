@@ -23,7 +23,7 @@ for i in range(0, 60):
     d = d1 + datetime.timedelta(days=i)
     arr_date.append(d.strftime('%Y%m%d'))
 
-tianchi_data.query("TRUNCATE music_tianchi.plays_songs;")
+t_data.query("TRUNCATE music_tianchi.plays_songs;")
 
 v = 0
 p_pg = 0
