@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
     csvfile = file("csv_gbdtm61.csv", 'wb')
     writer = csv.writer(csvfile)
-    writer.writerows(predict_data)
+    writer.writerows(predict_data_to_csv)
     csvfile.close()
 
 
