@@ -1,10 +1,9 @@
-import numpy as np
-from sklearn.ensemble import GradientBoostingRegressor
-from data_sql import *
-from scipy import stats
-import numpy as np
 import csv
 import datetime
+
+import numpy as np
+from data_sql import *
+from sklearn.ensemble import GradientBoostingRegressor
 
 
 def learn_by_gbdt(train_id, train_feat, test_feat):

@@ -1,8 +1,7 @@
-from data_sql import *
 import csv
 import datetime
 
-
+from data_sql import *
 
 t_data = tianchi_data()
 

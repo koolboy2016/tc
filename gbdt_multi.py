@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from data_sql import *
+import csv
+import datetime
+
 import numpy as np
 import pandas as pd
+from data_sql import *
 from sklearn.ensemble import GradientBoostingRegressor
-import csv
-import datetime,time
 
 n_steps = 10
 total_days = 183

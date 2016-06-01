@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-from data_sql import *
-from scipy import stats
-import numpy as np
-import csv
-import datetime
 from gbdt import *
 
 t_data = tianchi_data()

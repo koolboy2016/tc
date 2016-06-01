@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from data_sql import *
-from scipy import
-import numpy as np
 import csv
 import datetime
+
+import numpy as np
+from data_sql import *
+from scipy import
 
 t_data = tianchi_data()
 # test for git

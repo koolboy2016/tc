@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
-import pandas as pd
-from random import random
-import numpy as np
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation, Dropout
-from keras.layers.recurrent import LSTM
-
-from data_sql import *
-from sms import *
-import time
 import csv
-import datetime, sys
+import datetime
+import sys
+import time
+
+import numpy as np
+import pandas as pd
+from keras.layers.core import Dense
+from keras.layers.recurrent import LSTM
+from keras.models import Sequential
+from data_sql import *
+
+from sms import *
 
 t_start = time.clock()
 

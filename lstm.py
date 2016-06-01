@@ -1,12 +1,10 @@
-import pandas as pd
-from random import random
 import numpy as np
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation, Dropout
+import pandas as pd
+from keras.layers.core import Dense
 from keras.layers.recurrent import LSTM
+from keras.models import Sequential
 
 from data_sql import *
-import time
 
 max_length = 7
 

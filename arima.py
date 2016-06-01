@@ -1,16 +1,13 @@
 # from __future__ import print_function
 
-import numpy as np
-from scipy import stats
-import pandas as pd
-import matplotlib.pyplot as plt
 import datetime
 
+import numpy as np
+import pandas as pd
 import statsmodels.api as sm
 from data_sql import *
+from scipy import stats
 
-from statsmodels.graphics.api import qqplot
-import time
 
 def train_by_arma(dta):
     # dta= dta.diff(2)
