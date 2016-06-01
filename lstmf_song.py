@@ -159,6 +159,8 @@ if mod == 'v':
     artt_p = get_artist_predict(predicted,s_a_map,a_map)
     artt_y = get_artist_predict(y_test,s_a_map,a_map)
 
+    print artt_p
+    print artt_y
     score = get_score_of_predict(artt_p, artt_y, data)
     # print score
     rmse = np.sqrt(((predicted - y_test) ** 2).mean(axis=0))
