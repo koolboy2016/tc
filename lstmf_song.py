@@ -3,7 +3,7 @@ import datetime
 
 import numpy as np
 import pandas as pd
-from keras.layers.core import Dense
+from keras.layers.core import Dense,Dropout
 from keras.layers.recurrent import LSTM
 from keras.models import Sequential
 from data_sql import *
@@ -52,10 +52,15 @@ def train_test_by_lstm(X_train, y_train, X_test):
 
     model = Sequential()
     model.add(LSTM(500, return_sequences=True, input_shape=(max_sequence_length, in_dim)))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=False))
     model.add(Dense(out_dim, activation='linear'))
     model.compile(loss="mean_squared_error", optimizer="rmsprop")
@@ -70,10 +75,15 @@ def train_by_lstm(X_train, y_train):
 
     model = Sequential()
     model.add(LSTM(500, return_sequences=True, input_shape=(max_sequence_length, in_dim)))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(500, return_sequences=False))
     model.add(Dense(out_dim, activation='linear'))
     model.compile(loss="mean_squared_error", optimizer="rmsprop")
