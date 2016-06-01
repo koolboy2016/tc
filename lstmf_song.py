@@ -7,6 +7,7 @@ from keras.layers.core import Dense,Dropout
 from keras.layers.recurrent import LSTM
 from keras.models import Sequential
 from data_sql import *
+from tc_util import *
 
 max_length = 30
 in_dim = 10842
@@ -154,7 +155,6 @@ if mod == 'v':
     # for self-valid
     (X_train, y_train), (X_test, y_test) = train_test_split(data, rate_of_test)
 
-    print 'X_train',X_train
     predicted = train_test_by_lstm(X_train, y_train, X_test)
     artt_p = get_artist_predict(predicted,s_a_map,a_map)
     artt_y = get_artist_predict(y_test,s_a_map,a_map)
@@ -166,6 +166,7 @@ if mod == 'v':
 elif mod == 'c':
     # for contest
     (X_train, y_train), (X_test, y_test) = train_test_split(data, 0)
+
     model = train_by_lstm(X_train, y_train)
     td = data.iloc[len(data) - max_length:].as_matrix()
     all_predict = []
@@ -195,9 +196,9 @@ elif mod == 'c':
                 predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k-1]))
     # print all_predict
 
-    csvfile = file("csv_lstm58.csv", 'wb')
+    file_name = get_result_name("gbdt_mm")
+    csvfile = file(file_name, 'wb')
     writer = csv.writer(csvfile)
-
     writer.writerows(predict_data)
 
     csvfile.close()
