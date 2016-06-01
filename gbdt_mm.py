@@ -9,7 +9,7 @@ from data_sql import *
 from tc_util import *
 from sklearn.ensemble import GradientBoostingRegressor
 
-n_steps = 10
+n_steps = 30
 total_days = 183
 predict_days = 61
 
