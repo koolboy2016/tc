@@ -108,6 +108,9 @@ if __name__ == '__main__':
         tmp_arr = np.array(arr_data.iloc[-n_steps:,:].as_matrix())
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
+            print predict_feat[spt]
+            time.sleep(1000)
+
             pred_d = model_down.predict(predict_feat[spt])
             pred_f = model_favor.predict(predict_feat[spt])
             predict_id.append(pred_p[0])
