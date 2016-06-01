@@ -9,8 +9,8 @@ from keras.models import Sequential
 from data_sql import *
 
 max_length = 30
-in_dim = 50
-out_dim = 50
+in_dim = 10842
+out_dim = 10842
 D_batch_size = 100000
 D_nb_epoch = 1000
 D_validation_split = 0.3
