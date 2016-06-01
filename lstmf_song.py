@@ -18,7 +18,7 @@ D_validation_split = 0.3
 rate_of_test = 0.3
 predict_date = 61
 
-mod = 'v'
+mod = 'c'
 
 
 def _load_data(data, n_prev=max_length):
@@ -118,7 +118,7 @@ def load_tianchi_data():
 
     playss = pd.DataFrame(all_plays)
     all_plays = playss.T
-    return all_plays, arr_song,s_a_map,a_map
+    return all_plays, arr_song,s_a_map,a_map,sa_arr
 
 
 def get_score_of_predict(predicted, y_test, data):
@@ -144,7 +144,7 @@ def get_artist_predict(predict_res, s_a_map,a_map):
         ret.append(line)
     return ret
 
-data, arr_artist,s_a_map,a_map = load_tianchi_data()
+data, arr_song,s_a_map,a_map,arr_artist = load_tianchi_data()
 arr_date = []
 d1 = datetime.datetime(2015, 9, 1)
 for i in range(0, 60):
@@ -176,29 +176,23 @@ elif mod == 'c':
     for k in range(0, predict_date):
         arr = []
         arr.append(td)
-        # print np.array(arr)
-        # time.sleep(1000)
-        # print td
         predicted = model.predict(np.array(arr))[0]
-        # predicted = pd.Series(range(0,50))
-        # print td
-        # print predicted
-        # time.sleep(10)
+        artt_p = get_artist_predict(predicted,s_a_map,a_map)[0]
+
+
         td = pd.DataFrame(td)
         all_predict.append(predicted)
-        # print predicted
         td = td.iloc[1:]
         td.ix[max_length + k] = pd.Series(predicted)
         td = td.iloc[0:].as_matrix()
         if predict_date ==60 :
             for idx in range(len(predicted)):
-                predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k]))
+                predict_data.append((arr_artist[idx][0], int(round(artt_p[idx])), arr_date[k]))
         if predict_date==61 and k > 0:
             for idx in range(len(predicted)):
-                predict_data.append((arr_artist[idx][0], int(round(predicted[idx])), arr_date[k-1]))
-    # print all_predict
+                predict_data.append((arr_artist[idx][0], int(round(artt_p[idx])), arr_date[k-1]))
 
-    file_name = get_result_name("gbdt_mm")
+    file_name = get_result_name("lstmf_song")
     csvfile = file(file_name, 'wb')
     writer = csv.writer(csvfile)
     writer.writerows(predict_data)
