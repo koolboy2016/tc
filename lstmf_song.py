@@ -139,7 +139,7 @@ def get_artist_predict(predict_res, s_a_map,a_map):
     ret = []
     for d in range(0,n_days):
         line = [0]*50
-        for i in range(0,len(predict_res)):
+        for i in range(0,len(predict_res[d])):
             line[a_map[s_a_map[i]]] += predict_res[d][i]
         ret.append(line)
     return ret
@@ -178,6 +178,7 @@ elif mod == 'c':
         arr.append(td)
         predicted = model.predict(np.array(arr))[0]
         artt_p = get_artist_predict([predicted],s_a_map,a_map)[0]
+
         td = pd.DataFrame(td)
         all_predict.append(predicted)
         td = td.iloc[1:]
