@@ -38,3 +38,15 @@ class tianchi_data:
         rows = cursor.fetchall()
         self.close()
         return rows
+
+    def insert_many(self,sql,args):
+        self.connect()
+        cursor = self.conn.cursor()
+        try:
+            cursor.executemany(sql, args)
+        except Exception as e:
+            print("执行MySQL: %s 时出错：%s" % (sql, e))
+        finally:
+            cursor.close()
+            self.conn.commit()
+            self.close()
