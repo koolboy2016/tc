@@ -13,12 +13,12 @@ max_length = 30
 in_dim = 10842
 out_dim = 10842
 D_batch_size = 100000
-D_nb_epoch = 10
+D_nb_epoch = 1000
 D_validation_split = 0.3
 rate_of_test = 0.3
 predict_date = 61
 
-mod = 'c'
+mod = 'v'
 
 
 def _load_data(data, n_prev=max_length):
