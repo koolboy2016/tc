@@ -48,5 +48,5 @@ for song_item in arr_song:
     sql = "insert into plays_songs (song_id,play_time,down_time,favor_time) values(%s,%d,%d,%d)"
     for i in range(0, 183):
         song_data.append(
-            (song_id, arr_play_time[i], arr_down_time[i], arr_favor_time[i]))
+            (song_id, int(arr_play_time[i]), int(arr_down_time[i]), int(arr_favor_time[i])))
     t_data.insert_many(sql, song_data)
