@@ -118,7 +118,9 @@ if __name__ == '__main__':
             next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+1, dow, wkd])
 
             tmp_arr = np.delete(tmp_arr,0,0)
-            tmp_arr = np.concatenate((tmp_arr,next_row))
+
+
+            tmp_arr = np.concatenate((tmp_arr,[next_row]))
             print 'tmp_arr2',tmp_arr
             arr_tmp = pd.DataFrame(tmp_arr)
             print 'arr_tmp',arr_tmp
