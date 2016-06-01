@@ -103,6 +103,7 @@ if __name__ == '__main__':
         model_down = train_by_gbdt(train_feat, train_idd)
         model_favor = train_by_gbdt(train_feat, train_idf)
 
+        tmp_arr = np.array(arr_data.iloc[-n_steps:].as_matrix())
 
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
@@ -116,13 +117,16 @@ if __name__ == '__main__':
                 wkd = 1
             next_row = np.array([pred_p[0],pred_d[0],pred_f[0],predict_feat[spt][hhw-4], predict_feat[spt][hhw-3]+1, dow, wkd])
 
-            arr_data.append(pd.Series(next_row), ignore_index=True)
-            print arr_data
-            arr_pt = np.array(arr_data.iloc[-n_steps:, 0].as_matrix())
-            arr_dt = np.array(arr_data.iloc[-n_steps:, 1].as_matrix())
-            arr_ft = np.array(arr_data.iloc[-n_steps:, 2].as_matrix())
+            tmp_arr = np.delete(tmp_arr,0)
+            tmp_arr = np.concatenate((tmp_arr,next_row))
+
+            arr_tmp = pd.DataFrame(tmp_arr)
+
+            arr_pt = np.array(arr_tmp.iloc[-n_steps:, 0].as_matrix())
+            arr_dt = np.array(arr_tmp.iloc[-n_steps:, 1].as_matrix())
+            arr_ft = np.array(arr_tmp.iloc[-n_steps:, 2].as_matrix())
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
-            feat_for_normal = np.array(arr_data.iloc[-1].as_matrix())
+            feat_for_normal = np.array(arr_tmp.iloc[-1].as_matrix())
             predict_feat.append(np.concatenate((feat_for_time, feat_for_normal)))
         print predict_id
         time.sleep(1000)
