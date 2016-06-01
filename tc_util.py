@@ -32,7 +32,7 @@ def send_sms(text):
 
 
 def get_result_name(method):
-    now = time.time()
-    time_str = time.strftime("%Y-%m-%d %H:%M:%S", now)
+    ISOTIMEFORMAT='%Y-%m-%d %X'
+    time_str = time.strftime( ISOTIMEFORMAT, time.localtime( time.time() ) )
     ret = save_path + method + time_str + ".csv"
     return ret
