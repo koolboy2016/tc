@@ -116,13 +116,13 @@ if __name__ == '__main__':
     model_down = train_by_gbdt(all_train_feat, all_train_id_down)
     model_favor = train_by_gbdt(all_train_feat, all_train_id_favor)
 
-    print 'predict_feat_first',predict_feat_first
+    print 'predict_feat_first',len(predict_feat_first)
 
     # for predict
     for a_idx in range(0,len(arr_artist)):
         artist_id = arr_artist[a_idx][0]
         tmp_arr = data_time_series[a_idx]
-        predict_feat = predict_feat_first[a_idx]
+        predict_feat = [predict_feat_first[a_idx]]
 
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
