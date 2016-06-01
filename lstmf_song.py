@@ -22,7 +22,7 @@ D_validation_split = 0.2
 rate_of_test = 0.3
 predict_date = 61
 
-mod = 'v'
+mod = 'c'
 
 
 def _load_data(data, n_prev=max_length):
