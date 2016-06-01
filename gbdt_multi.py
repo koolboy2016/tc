@@ -110,7 +110,7 @@ if __name__ == '__main__':
             pred_f = model_favor.predict(predict_feat[spt])
             predict_id.append(pred_p[0])
             if spt > 0:
-                predict_data_to_csv.append((artist_id, int(round(pred_p[0]), predict_date[spt-1])))
+                predict_data_to_csv.append((artist_id, int(round(pred_p[0])), predict_date[spt-1]))
 
             hhw = len(predict_feat[spt])
             wkd = 0
