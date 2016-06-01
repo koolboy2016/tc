@@ -103,10 +103,21 @@ def load_tianchi_data():
         for pi in p:
             plays.append(pi[0])
         all_plays.append(plays)
+    s_a_map = {}
+    a_map = {}
+    sql = "SELECT song_id,artist_id FROM music_tianchi.mars_tianchi_songs group by song_id order by song_id;"
+    sa_arr = t_data.query(sql)
+    for saidx in range(0,len(sa_arr)):
+        s_a_map[saidx] = sa_arr[saidx][1]
+
+    sql = "SELECT distinct(artist_id) FROM music_tianchi.mars_tianchi_songs  order by artist_id;"
+    sa_arr = t_data.query(sql)
+    for saidx in range(0,len(sa_arr)):
+        a_map[sa_arr[saidx][0]] = saidx
 
     playss = pd.DataFrame(all_plays)
     all_plays = playss.T
-    return all_plays, arr_song
+    return all_plays, arr_song,s_a_map,a_map
 
 
 def get_score_of_predict(predicted, y_test, data):
@@ -122,8 +133,17 @@ def get_score_of_predict(predicted, y_test, data):
         score += (1 - thta) * fi
     return score
 
+def get_artist_predict(predict_res, s_a_map,a_map):
+    n_days = len(predict_res)
+    ret = []
+    for d in range(0,n_days):
+        line = [0]*50
+        for i in range(0,len(predict_res)):
+            line[a_map[s_a_map[i]]] += predict_res[d][i]
+        ret.append(line)
+    return ret
 
-data, arr_artist = load_tianchi_data()
+data, arr_artist,s_a_map,a_map = load_tianchi_data()
 arr_date = []
 d1 = datetime.datetime(2015, 9, 1)
 for i in range(0, 60):
@@ -136,8 +156,10 @@ if mod == 'v':
 
     print 'X_train',X_train
     predicted = train_test_by_lstm(X_train, y_train, X_test)
+    artt_p = get_artist_predict(predicted,s_a_map,a_map)
+    artt_y = get_artist_predict(y_test,s_a_map,a_map)
 
-    # score = get_score_of_predict(predicted, y_test, data)
+    score = get_score_of_predict(artt_p, artt_y, data)
     # print score
     rmse = np.sqrt(((predicted - y_test) ** 2).mean(axis=0))
     print rmse
