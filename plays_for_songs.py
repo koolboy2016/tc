@@ -32,7 +32,7 @@ for song_item in arr_song:
           "WHERE mars_tianchi_user_actions.song_id=mars_tianchi_songs.song_id and mars_tianchi_songs.song_id='" + song_id + "' " \
                                                                                                                             "group by Ds"
     v += 1
-    print 'progressing ',v*100/arr_song
+    print 'progressing ',v*100/len(arr_song)
     arr_ret = t_data.query(sql)
     arr_play_time = [0] * 183
     arr_down_time = [0] * 183
