@@ -121,6 +121,7 @@ if __name__ == '__main__':
             tmp_arr = np.concatenate((tmp_arr,next_row))
 
             arr_tmp = pd.DataFrame(tmp_arr)
+            print 'arr_tmp',arr_tmp
 
             arr_pt = np.array(arr_tmp.iloc[-n_steps:, 0].as_matrix())
             arr_dt = np.array(arr_tmp.iloc[-n_steps:, 1].as_matrix())
