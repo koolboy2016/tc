@@ -68,7 +68,7 @@ if __name__ == '__main__':
     predict_date = get_predict_date()
     sql = 'SELECT distinct(artist_id) FROM music_tianchi.mars_tianchi_songs;'
     arr_artist = tianchi.query(sql)
-    predict_data = []
+    predict_data_to_csv = []
     for artist_item in arr_artist:
         artist_id = artist_item[0]
         sql = "SELECT play_time,down_time,favor_time,gender,day_of_begin,day_of_week,weekend FROM music_tianchi.plays WHERE artist_id = '" + artist_id + "' order by day_of_begin;"
@@ -109,6 +109,9 @@ if __name__ == '__main__':
             pred_d = model_down.predict(predict_feat[spt])
             pred_f = model_favor.predict(predict_feat[spt])
             predict_id.append(pred_p[0])
+            if spt > 0:
+                predict_data_to_csv.append((artist_id, int(round(pred_p[0]), predict_date[spt-1])))
+
             hhw = len(predict_feat[spt])
             wkd = 0
             dow = int(predict_feat[spt][hhw-2]+1)%7
@@ -128,7 +131,12 @@ if __name__ == '__main__':
             feat_for_time = get_mean_std_diff(arr_pt, arr_dt, arr_ft)
             feat_for_normal = np.array(arr_tmp.iloc[-1].as_matrix())
             predict_feat.append(np.concatenate((feat_for_time, feat_for_normal)))
-        print predict_id
+
+
+    csvfile = file("csv_gbdtm61.csv", 'wb')
+    writer = csv.writer(csvfile)
+    writer.writerows(predict_data)
+    csvfile.close()
 
 
 
