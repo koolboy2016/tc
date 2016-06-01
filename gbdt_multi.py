@@ -104,7 +104,6 @@ if __name__ == '__main__':
         model_favor = train_by_gbdt(train_feat, train_idf)
 
         tmp_arr = np.array(arr_data.iloc[-n_steps:,:].as_matrix())
-        print 'tmp_arr',tmp_arr
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
             pred_d = model_down.predict(predict_feat[spt])
@@ -121,9 +120,7 @@ if __name__ == '__main__':
 
 
             tmp_arr = np.concatenate((tmp_arr,[next_row]))
-            print 'tmp_arr2',tmp_arr
             arr_tmp = pd.DataFrame(tmp_arr)
-            print 'arr_tmp',arr_tmp
 
             arr_pt = np.array(arr_tmp.iloc[-n_steps:, 0].as_matrix())
             arr_dt = np.array(arr_tmp.iloc[-n_steps:, 1].as_matrix())
@@ -132,7 +129,6 @@ if __name__ == '__main__':
             feat_for_normal = np.array(arr_tmp.iloc[-1].as_matrix())
             predict_feat.append(np.concatenate((feat_for_time, feat_for_normal)))
         print predict_id
-        time.sleep(1000)
 
 
 
