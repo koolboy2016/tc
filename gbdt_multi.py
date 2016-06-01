@@ -103,7 +103,7 @@ if __name__ == '__main__':
         model_down = train_by_gbdt(train_feat, train_idd)
         model_favor = train_by_gbdt(train_feat, train_idf)
 
-        tmp_arr = np.array(arr_data.iloc[-n_steps:].as_matrix())
+        tmp_arr = np.array(arr_data.iloc[-n_steps:,:].as_matrix())
 
         for spt in range(0, predict_days):
             pred_p = model_play.predict(predict_feat[spt])
