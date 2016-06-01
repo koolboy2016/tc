@@ -133,6 +133,8 @@ for i in range(0, 60):
 if mod == 'v':
     # for self-valid
     (X_train, y_train), (X_test, y_test) = train_test_split(data, rate_of_test)
+
+    print 'X_train',X_train
     predicted = train_test_by_lstm(X_train, y_train, X_test)
 
     # score = get_score_of_predict(predicted, y_test, data)
