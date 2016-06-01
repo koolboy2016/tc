@@ -9,12 +9,14 @@ from keras.models import Sequential
 from data_sql import *
 from tc_util import *
 
+t_start = time.clock()
+
 max_length = 30
 in_dim = 10842
 out_dim = 10842
-D_batch_size = 100000
-D_nb_epoch = 1000
-D_validation_split = 0.3
+D_batch_size = 100
+D_nb_epoch = 5000
+D_validation_split = 0.2
 rate_of_test = 0.3
 predict_date = 61
 
@@ -197,3 +199,7 @@ elif mod == 'c':
     writer.writerows(predict_data)
 
     csvfile.close()
+t_end = time.clock()
+print 'elapsed time=', t_end - t_start
+if mod == 'c':
+    send_sms("lstmd.py已经完成,,执行时间为"+str(t_end - t_start)+",写入了文件"+file_name)
