@@ -184,10 +184,10 @@ elif mod == 'c':
         td.ix[max_length + k] = pd.Series(predicted)
         td = td.iloc[0:].as_matrix()
         if predict_date ==60 :
-            for idx in range(len(predicted)):
+            for idx in range(len(artt_p)):
                 predict_data.append((arr_artist[idx][0], int(round(artt_p[idx])), arr_date[k]))
         if predict_date==61 and k > 0:
-            for idx in range(len(predicted)):
+            for idx in range(len(artt_p)):
                 predict_data.append((arr_artist[idx][0], int(round(artt_p[idx])), arr_date[k-1]))
 
     file_name = get_result_name("lstmf_song")
