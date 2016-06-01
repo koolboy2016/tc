@@ -176,10 +176,8 @@ elif mod == 'c':
     for k in range(0, predict_date):
         arr = []
         arr.append(td)
-        predicted = model.predict(np.array(arr))[0]
+        predicted = model.predict(np.array(arr))
         artt_p = get_artist_predict(predicted,s_a_map,a_map)[0]
-
-
         td = pd.DataFrame(td)
         all_predict.append(predicted)
         td = td.iloc[1:]
