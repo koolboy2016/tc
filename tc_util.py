@@ -3,7 +3,7 @@
 import httplib
 import urllib
 import json
-import time
+import time,csv
 
 sms_host = "sms.yunpian.com"
 voice_host = "voice.yunpian.com"
@@ -32,7 +32,7 @@ def send_sms(text):
 
 
 def get_result_name(method):
-    ISOTIMEFORMAT='%Y-%m-%d %X'
+    ISOTIMEFORMAT='%Y-%m-%d-%X'
     time_str = time.strftime( ISOTIMEFORMAT, time.localtime( time.time() ) )
     ret = save_path + method + time_str + ".csv"
     return ret
