@@ -31,7 +31,7 @@ D_nb_epoch = 4000
 D_validation_split = 0.3
 rate_of_test = 0.3
 predict_date = 61
-mod = 'c'
+mod = 'v'
 write_to_file = ''
 
 arr_date = []
@@ -186,6 +186,12 @@ if mod == 'v':
             plays.append(pi[0])
         plays = pd.DataFrame(plays)
         (X_train, y_train), (X_test, y_test) = train_test_split(plays, rate_of_test)  # retrieve data
+        print 'X_train'
+        print X_train
+        print 'y_train'
+        print y_train
+        time.sleep(10086)
+
         predicted = train_test_by_lstm(X_train, y_train, X_test)
         a_score = get_score_of_one_predict(predicted, y_test)
 
